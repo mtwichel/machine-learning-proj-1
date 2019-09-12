@@ -58,13 +58,21 @@ if dataChoice == 'iris':
     rawData = pd.read_csv('iris.csv')
     
     data = rawData.drop(['Class'], axis = 1).round(0).applymap(int).applymap(str)
-
     data['Class'] = rawData['Class']
 
 elif dataChoice == 'house':
     print('Importing File: house-votes-84.csv')
     rawData = pd.read_csv('house-votes-84.csv')
     data = rawData
+
+elif dataChoice == 'breast-cancer':
+    print('Importing File: breast-cancer-wisconsin.csv')
+    # import the data
+    rawData = pd.read_csv('breast-cancer-wisconsin.csv', na_values='?')
+    # remove rows with missing values
+    nonNanData = rawData.dropna()
+    data = nonNanData.drop(['Class'], axis = 1).applymap(lambda x: (x - 1)/5).applymap(np.floor).applymap(int).applymap(str)
+    data['Class'] = nonNanData['Class']
 
 
 # split training data
